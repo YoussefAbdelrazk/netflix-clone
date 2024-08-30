@@ -1,6 +1,38 @@
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../context/Authcontext";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
 export default function Login() {
+  const navigate = useNavigate()
+  const {Login,user} = useAuthContext()
+  let validate = Yup.object().shape({
+    email: Yup.string().email("email is invalid").required("email is invalid"),
+
+    password: Yup.string()
+      .matches(/^[A-Z][a-z0-9]{5,10}$/, "password must be uppercase")
+      .required(),
+  });
+  const login = async(values) => {
+    try {
+      await Login(values.email, values.password)
+      toast.success(" welcome ")
+      
+      navigate('/')
+    }catch (err) {
+      console.log(err)
+    }
+  };
+
+  const { values, handleSubmit, handleChange, handleBlur, touched, errors } =
+  useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: login,
+    validationSchema: validate,
+  });
   return (
     <div className=" w-full h-screen">
     <img
@@ -13,9 +45,25 @@ export default function Login() {
       <div className=" max-w-[450px] h-[600px] mx-auto bg-black/75 text-white">
         <div className=" max-w-[320px] mx-auto py-16">
           <h1 className="font-bold text-3xl"> Sign In</h1>
-          <form className=" flex flex-col py-4" >
-            <input className=" p-3 my-2 bg-gray-500 rounded " placeholder="Email" autoComplete="email" type="email" />
-            <input className=" p-3 my-2 bg-gray-500 rounded " placeholder="Password" autoComplete="current-password" type="password" />
+          <form onSubmit={handleSubmit} className=" flex flex-col py-4" >
+            <input value={values.email} name="email" onChange={handleChange} onBlur={handleBlur} className=" p-3 my-2 bg-gray-500 rounded " placeholder="Email" autoComplete="email" type="email" />
+            {errors.email && touched.email && (
+                  <div
+                    class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                    role="alert"
+                  >
+                    {errors.email}
+                  </div>
+                )}
+            <input  value={values.password} onChange={handleChange} onBlur={handleBlur} name="password" className=" p-3 my-2 bg-gray-500 rounded " placeholder="Password" autoComplete="current-password" type="password" />
+            {errors.password && touched.password && (
+                  <div
+                    class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                    role="alert"
+                  >
+                    {errors.password}
+                  </div>
+                )}
             <button className=" bg-red-600 py-3 my-6 rounded font-bold"> Sign Up</button>
             <div className=" flex justify-between items-center text-gray-600 text-sm">
               <p> <input type="checkbox" className="mr-2"  /> Remember me</p>

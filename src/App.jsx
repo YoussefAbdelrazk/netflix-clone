@@ -21,7 +21,7 @@ const router = createBrowserRouter([
   <>
   <AuthProvider>
   <RouterProvider router={router}/>
-  <ToastContainer position="top-center" />
+
   </AuthProvider>
       
   </>

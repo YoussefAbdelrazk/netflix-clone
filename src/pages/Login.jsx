@@ -64,7 +64,7 @@ export default function Login() {
                     {errors.password}
                   </div>
                 )}
-            <button className=" bg-red-600 py-3 my-6 rounded font-bold"> Sign Up</button>
+            <button className=" bg-red-600 py-3 my-6 rounded font-bold"> Login</button>
             <div className=" flex justify-between items-center text-gray-600 text-sm">
               <p> <input type="checkbox" className="mr-2"  /> Remember me</p>
               <p>Need Help?</p>

@@ -2,7 +2,7 @@ import { ToastContainer } from "react-toastify";
 
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Home,HomeLayout,Login,Signup,Account } from './pages'
+import { Home,HomeLayout,Login,Signup,Account,Singlemovie } from './pages'
 import { AuthProvider } from './context/Authcontext'
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -12,6 +12,7 @@ const router = createBrowserRouter([
       {index:true ,element:<Home/>},
     
       {path:'/account',element:<Account/>},
+      {path:'/movie/:id',element:<Singlemovie/>},
   ]},
   {path:'/login',element:<Login/>},
   {path:'/signup',element:<Signup/>},

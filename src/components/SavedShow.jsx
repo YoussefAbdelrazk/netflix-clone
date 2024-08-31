@@ -27,7 +27,7 @@ export default function SavedShow() {
   const movieRef = doc(db, 'users', `${user?.email}`)
   const deleteShow = async (passedID) => {
       try {
-        const result = movies.filter((item) => item.id !== passedID)
+        const result = movies?.filter((item) => item.id !== passedID)
         await updateDoc(movieRef, {
             savedShows: result
         })
@@ -49,7 +49,7 @@ export default function SavedShow() {
         id={'slider'}
         className='w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative'
       >
-        {movies.map((item) => (
+        {movies?.map((item) => (
           <div
             key={item.id}
             className='w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2'
